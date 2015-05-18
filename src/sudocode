@@ -1,0 +1,21 @@
+ hasAnyMajorDiagonalConflicts: function() {
+// get a reference to the rows
+// iterate over each row
+  // iterate over each column
+    // if there is a piece
+      // call hasMajorDiagonalConflict with column number
+        // if yes, return true
+
+ hasMajorDiagonalConflictAt: function(row, column)
+      // declare counter equals 1
+      // call diagonalSearch(row, column)
+
+// var diagonalSearch = function(row, column){
+  // check the next row down and column over
+    // if there's a piece
+      // increase counter
+      // if counter > 1
+        // return true
+    // else
+      // call diagonalSearch(row +1, column +1)
+      //

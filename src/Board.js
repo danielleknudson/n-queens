@@ -79,11 +79,30 @@
     //
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
+      var row = this.get(rowIndex);
+      var count = 0;
+      for (var i = 0; i < row.length; i++){
+        if ( row[i] ){
+          count++;
+          if (count > 1){
+            return rowIndex.toString();
+          }
+        }
+      }
+
       return false; // fixme
     },
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
+      var rows = this.rows();
+
+      for (var i = 0; i < rows.length; i++){
+        if ( this.hasRowConflictAt(i) ){
+          return true;
+        }
+      }
+
       return false; // fixme
     },
 
@@ -94,11 +113,29 @@
     //
     // test if a specific column on this board contains a conflict
     hasColConflictAt: function(colIndex) {
+      var rows = this.rows();
+      var count = 0;
+      for (var i = 0; i < rows.length; i++) {
+        if(rows[i][colIndex]) {
+          count++;
+          if (count > 1) {
+            return colIndex.toString();
+          }
+        }
+      }
       return false; // fixme
     },
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
+      var rows = this.rows();
+      for (var i = 0; i < rows.length; i++) {
+        for (var j = 0; j < rows[i].length; j++) {
+          if (this.hasColConflictAt(j)) {
+            return true;
+          }
+        }
+      }
       return false; // fixme
     },
 
@@ -109,11 +146,48 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
+      // get a reference to var column  = majorDiagonalColumnIndexAtFirstRow
+      // get reference to the rows
+      // iterate over rows
+        // if row at column index has a piece
+          // check row + 1 at col + 1
+            // if there is a piece
+              //  increase counter
+              //  test if counter > 1
+                // return count.toString
+            //  else
+              // continue loop
+
+//___________________________________________________
+
+      // get a reference to var column  = majorDiagonalColumnIndexAtFirstRow
+      // get reference to the rows
+      // iterate over the rows
+        // iterate over the columns
+          // if there's a piece
+            // call diagonalSearch(row, column)
+
+      // var diagonalSearch = function(row, column){
+
+        // check the next row down and column over
+          // if there's a piece
+            //
+
+      // };
+
+
+
       return false; // fixme
     },
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
+      // get a reference to the rows
+        // iterate over each row
+          // iterate over each column
+            // if there is a piece
+              // call hasMajorDiagonalConflict fn
+                // if yes, return true
       return false; // fixme
     },
 
