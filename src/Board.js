@@ -1,3 +1,4 @@
+
 // This file is a Backbone Model (don't worry about what that means)
 // It's part of the Board Visualizer
 // The only portions you need to work on are the helper functions (below)
@@ -145,49 +146,54 @@
     // --------------------------------------------------------------
     //
     // test if a specific major diagonal on this board contains a conflict
-    hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
-      // get a reference to var column  = majorDiagonalColumnIndexAtFirstRow
-      // get reference to the rows
-      // iterate over rows
-        // if row at column index has a piece
-          // check row + 1 at col + 1
-            // if there is a piece
-              //  increase counter
-              //  test if counter > 1
-                // return count.toString
-            //  else
-              // continue loop
-
-//___________________________________________________
-
-      // get a reference to var column  = majorDiagonalColumnIndexAtFirstRow
-      // get reference to the rows
-      // iterate over the rows
-        // iterate over the columns
-          // if there's a piece
-            // call diagonalSearch(row, column)
+    hasMajorDiagonalConflictAt: function(row, column) {
+      var rows = this.rows();
+      var length = rows.length;
 
       // var diagonalSearch = function(row, column){
+      var diagonalSearch = function(r, c){
+        // test if r+1 and c+1 is not undefined
+        var nextRow = r+1;
+        var nextCol = c+1;
 
-        // check the next row down and column over
-          // if there's a piece
-            //
+        if ((nextRow < length) && (nextCol < length)) {
+          // check the next row down and column over
+          if (rows[nextRow][nextCol] === 1){
+            // increase counter
 
-      // };
+            return true;
 
+          } else {
+             return diagonalSearch(nextRow, nextCol);
+          }
+        } else {
+          return false;
+        }
 
+      };
 
-      return false; // fixme
+      return diagonalSearch(row, column);
     },
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
       // get a reference to the rows
-        // iterate over each row
-          // iterate over each column
-            // if there is a piece
-              // call hasMajorDiagonalConflict fn
-                // if yes, return true
+
+      var rows = this.rows();
+      // iterate over each row
+      for (var i = 0; i < rows.length; i++){
+        // iterate over each column
+        for (var j = 0; j < rows[i].length; j++){
+          // if there is a piece
+          if (rows[i][j]){
+            // call hasMajorDiagonalConflict with row and column number
+            if (this.hasMajorDiagonalConflictAt(i, j)){
+              // if yes, return true
+              return true;
+            }
+          }
+        }
+      }
       return false; // fixme
     },
 
@@ -197,12 +203,50 @@
     // --------------------------------------------------------------
     //
     // test if a specific minor diagonal on this board contains a conflict
-    hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+    hasMinorDiagonalConflictAt: function(row, column) {
+      var rows = this.rows();
+      var length = rows.length;
+
+      // var diagonalSearch = function(row, column){
+      var diagonalSearch = function(r, c){
+        var nextRow = r +1;
+        var prevCol = c - 1;
+
+        if ((nextRow < length) && (prevCol >= 0)) {
+          // check the next row down and column over
+          if (rows[nextRow][prevCol] === 1){
+            return true;
+          } else {
+              return diagonalSearch(nextRow, prevCol);
+          }
+
+        } else {
+          return false;
+        }
+
+      };
+
+      return diagonalSearch(row, column);
     },
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
+      var rows = this.rows();
+
+      // iterate over each row
+      for (var i = 0; i < rows.length; i++){
+        // iterate over each column
+        for (var j = 0; j < rows[i].length; j++){
+          // if there is a piece
+          if (rows[i][j]){
+            // call hasMajorDiagonalConflict with row and column number
+            if (this.hasMinorDiagonalConflictAt(i, j)){
+              // if yes, return true
+              return true;
+            }
+          }
+        }
+      }
       return false; // fixme
     }
 
